@@ -4,7 +4,7 @@ import { StravaService } from './strava.service';
 import { UserModule } from 'user/user.module';
 
 @Module({
-  modules: [UserModule],
+  imports: [UserModule],
   providers: [StravaStrategy, StravaService],
 })
 export class StravaModule {}
