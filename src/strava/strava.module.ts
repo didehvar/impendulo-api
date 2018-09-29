@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
-import { StravaStrategy } from './strava.strategy';
 import { StravaService } from './strava.service';
-import { UserModule } from 'user/user.module';
+import { UsersModule } from 'users/users.module';
 
 @Module({
-  imports: [UserModule],
-  providers: [StravaStrategy, StravaService],
+  imports: [UsersModule],
+  providers: [StravaService],
+  exports: [StravaService],
 })
 export class StravaModule {}

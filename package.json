@@ -18,7 +18,8 @@
     "test:cov": "jest --coverage",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "webpack": "webpack --config webpack.config.js",
-    "migrate": "typeorm migration:run"
+    "typeorm": "ts-node ./node_modules/.bin/typeorm",
+    "migration": "npm run typeorm migration:run"
   },
   "dependencies": {
     "@nestjs/common": "^5.1.0",

@@ -1,8 +1,8 @@
 import { Strategy } from 'passport-strava';
 import { PassportStrategy } from '@nestjs/passport';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { StravaService } from './strava.service';
-import Profile from './interfaces/profile.interface';
+import { StravaService } from '../../strava/strava.service';
+import Profile from 'strava/interfaces/profile.interface';
 
 @Injectable()
 export class StravaStrategy extends PassportStrategy(Strategy) {
@@ -16,6 +16,7 @@ export class StravaStrategy extends PassportStrategy(Strategy) {
 
   async validate(accessToken: string, _, profile: Profile) {
     const user = await this.stravaService.validateUser(accessToken, profile);
+    console.log('validate', user);
 
     if (!user) {
       throw new UnauthorizedException();
