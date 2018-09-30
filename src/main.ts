@@ -16,6 +16,7 @@ async function bootstrap() {
 
   app.useGlobalGuards(new JwtAuthGuard());
 
-  await app.listen(3000);
+  await app.listen(process.env.PORT || 3000);
 }
+
 bootstrap();
