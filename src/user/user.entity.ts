@@ -5,18 +5,24 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { IsInt, IsEmail } from 'class-validator';
 
-@Entity()
-export class Users {
+@Entity('users')
+export class User {
   @PrimaryGeneratedColumn()
-  id?: number;
+  id: number;
 
   @CreateDateColumn()
-  createdAt?: Date;
+  createdAt: Date;
 
   @UpdateDateColumn()
-  updatedAt?: Date;
+  updatedAt: Date;
 
   @Column('bigint')
+  @IsInt()
   stravaId: number;
+
+  @Column()
+  @IsEmail()
+  email: string;
 }

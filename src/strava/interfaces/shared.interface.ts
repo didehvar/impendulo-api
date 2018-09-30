@@ -1,4 +1,4 @@
-export default interface Shared {
+export interface Shared {
   id: number;
 
   profile: string;

@@ -1,8 +1,8 @@
-import Shared from './shared.interface';
-import CLub from './club.interface';
-import Gear from './gear.interface';
+import { Shared } from './shared.interface';
+import { CLub } from './club.interface';
+import { Gear } from './gear.interface';
 
-export default interface User extends Shared {
+export interface User extends Shared {
   username: string | null;
   email: string;
   premium: boolean;

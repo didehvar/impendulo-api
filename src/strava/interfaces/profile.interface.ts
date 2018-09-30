@@ -1,6 +1,6 @@
-import User from './user.interface';
+import { User } from './user.interface';
 
-export default interface Profile {
+export interface Profile {
   provider: string;
   id: number;
 

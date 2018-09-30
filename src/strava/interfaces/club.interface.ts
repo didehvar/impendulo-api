@@ -1,6 +1,6 @@
-import Shared from './shared.interface';
+import { Shared } from './shared.interface';
 
-export default interface CLub extends Shared {
+export interface CLub extends Shared {
   url: string;
   sport_type: 'cycling' | 'running' | 'triathlon' | 'other';
   private: boolean;

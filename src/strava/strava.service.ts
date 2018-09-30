@@ -1,19 +1,22 @@
 import { Injectable } from '@nestjs/common';
-import { UsersService } from 'users/users.service';
-import Profile from './interfaces/profile.interface';
-import { Users } from 'users/users.entity';
+import { UserService } from 'user/user.service';
+import { Profile } from './interfaces/profile.interface';
+import { User } from 'user/user.entity';
 
 @Injectable()
 export class StravaService {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(private readonly usersService: UserService) {}
 
-  async createUser(accessToken: string, profile: Profile): Promise<Users> {
-    return await this.usersService.create({
-      stravaId: profile.id,
-    });
+  async createUser(accessToken: string, profile: Profile): Promise<User> {
+    const user = new User();
+
+    user.stravaId = profile.id;
+    user.email = profile._json.email;
+
+    return await this.usersService.create(user);
   }
 
-  async validateUser(accessToken: string, profile: Profile): Promise<Users> {
+  async validateUser(accessToken: string, profile: Profile): Promise<User> {
     const user = await this.usersService.findByStravaId(profile.id);
     console.log(user);
 

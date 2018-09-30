@@ -1,4 +1,4 @@
-export default interface Gear {
+export interface Gear {
   id: string;
   primary: boolean;
   name: string;
