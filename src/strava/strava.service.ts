@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { UserService } from 'user/user.service';
+import { UserService } from '../user/user.service';
 import { Profile } from './interfaces/profile.interface';
-import { User } from 'user/user.entity';
+import { User } from '../user/user.entity';
 
 @Injectable()
 export class StravaService {

@@ -2,7 +2,7 @@ import { Strategy } from 'passport-strava';
 import { PassportStrategy } from '@nestjs/passport';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { StravaService } from '../../strava/strava.service';
-import { Profile } from 'strava/interfaces/profile.interface';
+import { Profile } from '../../strava/interfaces/profile.interface';
 import { AuthService } from '../auth.service';
 
 @Injectable()
