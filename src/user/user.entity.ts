@@ -9,6 +9,10 @@ import { IsInt, IsEmail, IsString } from 'class-validator';
 
 @Entity('users')
 export class User {
+  constructor(partial?: Partial<User>) {
+    Object.assign(this, partial);
+  }
+
   @PrimaryGeneratedColumn()
   id: number;
 

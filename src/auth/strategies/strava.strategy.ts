@@ -20,7 +20,6 @@ export class StravaStrategy extends PassportStrategy(Strategy) {
 
   async validate(accessToken: string, _, profile: Profile) {
     const user = await this.stravaService.validateUser(accessToken, profile);
-    console.log('validate', profile);
 
     if (!user) {
       throw new UnauthorizedException();

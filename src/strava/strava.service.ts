@@ -8,19 +8,18 @@ export class StravaService {
   constructor(private readonly usersService: UserService) {}
 
   async createUser(accessToken: string, profile: Profile): Promise<User> {
-    const user = new User();
-
-    user.stravaId = profile.id;
-    user.email = profile._json.email;
-    user.firstname = profile.name.first;
-    user.lastname = profile.name.last;
-
-    return await this.usersService.create(user);
+    return await this.usersService.create(
+      new User({
+        stravaId: profile.id,
+        email: profile._json.email,
+        firstname: profile.name.first,
+        lastname: profile.name.last,
+      }),
+    );
   }
 
   async validateUser(accessToken: string, profile: Profile): Promise<User> {
     const user = await this.usersService.findByStravaId(profile.id);
-    console.log(user);
 
     if (!user) {
       return await this.createUser(accessToken, profile);
