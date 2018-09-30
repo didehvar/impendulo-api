@@ -12,6 +12,8 @@ export class StravaService {
 
     user.stravaId = profile.id;
     user.email = profile._json.email;
+    user.firstname = profile.name.first;
+    user.lastname = profile.name.last;
 
     return await this.usersService.create(user);
   }

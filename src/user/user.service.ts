@@ -13,11 +13,13 @@ export class UserService {
     return await this.userRepository.find();
   }
 
-  async findOneByToken(token: string): Promise<User> {
+  async findOne(id: string): Promise<User | undefined> {
+    return await this.userRepository.findOne(id);
+  }
+
+  async findOneByEmail(email: string): Promise<User> {
     return await this.userRepository.findOneOrFail({
-      where: {
-        token,
-      },
+      email,
     });
   }
 
@@ -31,5 +33,11 @@ export class UserService {
 
   async create(user: User): Promise<User> {
     return await this.userRepository.save(user);
+  }
+
+  async getProfile(id: string): Promise<User | undefined> {
+    return await this.userRepository.findOne(id, {
+      select: ['firstname', 'lastname'],
+    });
   }
 }

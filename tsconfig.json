@@ -13,7 +13,8 @@
     "outDir": "./dist",
     "baseUrl": "./src",
     "strict": true,
-    "strictPropertyInitialization": false
+    "strictPropertyInitialization": false,
+    "lib": ["es2016"]
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "**/*.spec.ts"]
