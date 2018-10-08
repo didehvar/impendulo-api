@@ -14,7 +14,7 @@ export class StravaStrategy extends PassportStrategy(Strategy) {
     super({
       clientID: process.env.STRAVA_CLIENT_ID,
       clientSecret: process.env.STRAVA_CLIENT_SECRET,
-      callbackURL: process.env.STRAVA_CALLBACK,
+      callbackURL: `${process.env.BASE_URL}/auth/strava`,
     });
   }
 
