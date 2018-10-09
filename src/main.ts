@@ -1,9 +1,12 @@
-import { NestFactory } from '@nestjs/core';
+import 'dotenv/config';
+import { NestFactory, Reflector, HTTP_SERVER_REF } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
-import './config';
 import { AppModule } from './app.module';
 import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
+import { RolesGuard } from './auth/guards/roles.guard';
 import { TransformInterceptor } from './transform.interceptor';
+import { logger } from './logger.middleware';
+import { ExceptionsFilter } from './exceptions.filter';
 
 declare const module: any;
 
@@ -18,6 +21,9 @@ async function bootstrap() {
 
   app.enableCors();
 
+  app.use(logger);
+  app.useGlobalFilters(new ExceptionsFilter(app.get(HTTP_SERVER_REF)));
+
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
@@ -25,7 +31,8 @@ async function bootstrap() {
     }),
   );
 
-  app.useGlobalGuards(new JwtAuthGuard());
+  const reflector = new Reflector();
+  app.useGlobalGuards(new JwtAuthGuard(reflector), new RolesGuard(reflector));
   app.useGlobalInterceptors(new TransformInterceptor());
 
   await app.listen(process.env.PORT || 3000);

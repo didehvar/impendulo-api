@@ -1,13 +1,21 @@
 import { ExecutionContext, Injectable } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { Request } from 'express';
+import { Reflector } from '@nestjs/core';
 
 @Injectable()
 export class JwtAuthGuard extends AuthGuard('jwt') {
-  canActivate(context: ExecutionContext) {
-    const request: Request = context.switchToHttp().getRequest();
+  constructor(private readonly reflector: Reflector) {
+    super();
+  }
 
-    if (request.originalUrl.includes('/auth/')) {
+  canActivate(context: ExecutionContext) {
+    const disableJwtGuard = this.reflector.get<boolean>(
+      'disableJwtGuard',
+      context.getHandler(),
+    );
+
+    if (disableJwtGuard) {
       return true;
     }
 

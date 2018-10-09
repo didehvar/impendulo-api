@@ -11,10 +11,10 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async signIn(user: User): Promise<string> {
-    const payload: JwtPayload = { email: user.email };
+  async signIn({ id, email, roles }: User): Promise<string> {
+    const payload: JwtPayload = { email, roles };
     return this.jwtService.sign(payload, {
-      subject: user.id.toString(),
+      subject: id.toString(),
     });
   }
 
