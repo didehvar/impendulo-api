@@ -1,19 +1,8 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Query,
-  Logger,
-  Body,
-  BadRequestException,
-  Param,
-  Req,
-} from '@nestjs/common';
+import { Controller, Get, Post, Query, Body } from '@nestjs/common';
 import { StravaService } from './strava.service';
 import { Roles } from '../auth/decorators/roles.decorator';
-import { map, catchError } from 'rxjs/operators';
 import { DisableJwtGuard } from '../auth/decorators/disable-jwt-guard.decorator';
-import { throwError } from 'rxjs';
+import { Webhook } from './interfaces/webhook.interface';
 
 @Controller('strava')
 export class StravaController {
@@ -28,13 +17,12 @@ export class StravaController {
   @Get('webhook')
   @DisableJwtGuard()
   challenge(@Query() query) {
-    console.log('Verifying webhook', query);
     return this.stravaService.verifyWebhook(query);
   }
 
   @Post('webhook')
-  webhook(@Body() body) {
-    console.log('webhook pot');
-    Logger.log(body);
+  @DisableJwtGuard()
+  webhook(@Body() body: Webhook) {
+    return this.stravaService.receiveWebhook(body);
   }
 }

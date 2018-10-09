@@ -1,4 +1,4 @@
-export interface WebhookCreated {
+export interface WebhookSubscription {
   id: number;
   application_id: number;
   callback_url: string;

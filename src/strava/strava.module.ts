@@ -4,10 +4,11 @@ import { StravaService } from './strava.service';
 import { UserModule } from '../user/user.module';
 import { StravaController } from './strava.controller';
 import { StravaSubscription } from './entities/strava-subscription.entity';
+import { StravaWebhook } from './entities/strava-webhook.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([StravaSubscription]),
+    TypeOrmModule.forFeature([StravaSubscription, StravaWebhook]),
     UserModule,
     HttpModule,
   ],

@@ -1,16 +1,17 @@
 import 'dotenv/config';
-import { NestFactory, Reflector, HTTP_SERVER_REF } from '@nestjs/core';
+import { NestFactory, Reflector } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
+import * as pino from 'pino';
+import * as expressPino from 'express-pino-logger';
 import { AppModule } from './app.module';
 import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 import { RolesGuard } from './auth/guards/roles.guard';
 import { TransformInterceptor } from './transform.interceptor';
-import { logger } from './logger.middleware';
-import { ExceptionsFilter } from './exceptions.filter';
 
 declare const module: any;
 
 async function bootstrap() {
+  const reflector = new Reflector();
   const app = await NestFactory.create(AppModule, {
     cors: {
       origin: process.env.APP_URL,
@@ -19,10 +20,16 @@ async function bootstrap() {
     },
   });
 
+  const logger = pino({
+    prettyPrint: process.env.NODE_ENV === 'development',
+    level:
+      process.env.LOG_LEVEL ||
+      (process.env.NODE_ENV === 'development' ? 'debug' : 'error'),
+  });
+
   app.enableCors();
 
-  app.use(logger);
-  app.useGlobalFilters(new ExceptionsFilter(app.get(HTTP_SERVER_REF)));
+  app.use(expressPino({ logger }));
 
   app.useGlobalPipes(
     new ValidationPipe({
@@ -31,7 +38,6 @@ async function bootstrap() {
     }),
   );
 
-  const reflector = new Reflector();
   app.useGlobalGuards(new JwtAuthGuard(reflector), new RolesGuard(reflector));
   app.useGlobalInterceptors(new TransformInterceptor());
 
