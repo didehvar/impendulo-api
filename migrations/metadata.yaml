@@ -1,0 +1,26 @@
+query_templates: []
+tables:
+- array_relationships: []
+  delete_permissions: []
+  event_triggers: []
+  insert_permissions: []
+  object_relationships: []
+  select_permissions: []
+  table: strava_subscriptions
+  update_permissions: []
+- array_relationships: []
+  delete_permissions: []
+  event_triggers: []
+  insert_permissions: []
+  object_relationships: []
+  select_permissions: []
+  table: users
+  update_permissions: []
+- array_relationships: []
+  delete_permissions: []
+  event_triggers: []
+  insert_permissions: []
+  object_relationships: []
+  select_permissions: []
+  table: strava_webhooks
+  update_permissions: []
