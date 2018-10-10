@@ -12,7 +12,16 @@ export class AuthService {
   ) {}
 
   async signIn({ id, email, roles }: User): Promise<string> {
-    const payload: JwtPayload = { email, roles };
+    const payload: JwtPayload = {
+      email,
+      roles,
+      'https://hasura.io/jwt/claims': {
+        'x-hasura-allowed-roles': roles || [],
+        'x-hasura-default-role': 'user',
+        'x-hasura-user-id': id,
+      },
+    };
+
     return this.jwtService.sign(payload, {
       subject: id.toString(),
     });
